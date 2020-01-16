@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.7/pwacompat.min.js"></script>
+  <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+  <link href='//fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>PWA Minimum</title>
+  <script src="script/jquery-1.11.1.min.js"></script>
+  <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(function(registration) {
+            console.log(
+              "ServiceWorker registration successful with scope: ",
+              registration.scope
+            );
+          })
+          .catch(function(err) {
+            console.log("ServiceWorker registration failed: ", err);
+          });
+      }
+  </script>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="#home" class="active logo"><img src="images/staffbase.png"></a>
+  <div id="myLinks">
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+  </div>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+    <div class="container">
+      <div class="col-xs-12 col-sm-12 col-md-8 wrapper">
+        <div class="row" id="data-entry"></div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4" style="background: green">1</div>
+    </div>
+    <div class="clearfix"></div>
+</body>
+</html>
+<script src="script/main.js"></script>
+<script>
+    function myFunction() {
+      var x = document.getElementById("myLinks");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+</script>
+
+
+
+ <!--
+author start
+<div class="col-xs-2 col-sm-2 col-md-2 author-image">
+    <img src=${news.author.avatar.thumb.url} class="img-responsive author-image-thumb">
+</div>
+<div class="col-xs-10 col-sm-10 col-md-10 author-details">
+    <p class="name">${news.author.firstName} ${news.author.lastName}</p>
+    <p class="date">${news.updated}</p>
+</div>
+
+author end
+
+
+        
+            <div class="col-xs-12 col-sm-12 col-md-12 article">
+                <a class="content" href="page.html?id=">
+                ${news.contents.en_US.content}
+                </a>
+            </div>
+            <div class="likes">
+                <p>Likes: ${news.likes.total} Comments: ${news.comments.total}</p>
+            </div>
+            <div class="identification">
+                <p>ID: ${news.id} AuthorID: ${news.authorID} CompanyID: ${news.companyID} BranchID: ${news.branchID} ChannelID: ${news.channelID}</p>
+            </div>-->
+
+<!--
+<div style="padding-left:16px">
+  <h3>Vertical Mobile Navbar</h3>
+  <p>This example demonstrates how a navigation menu on a mobile/smart phone could look like.</p>
+  <p>Click on the hamburger menu (three bars) in the top right corner, to toggle the menu.</p>
+</div>
+-->
