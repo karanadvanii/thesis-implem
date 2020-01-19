@@ -5,7 +5,7 @@ workbox.clientsClaim();
 
 // cache name
 workbox.core.setCacheNameDetails({
-    prefix: 'My-awesome-cache',
+    prefix: 'cache',
     precache: 'precache',
     runtime: 'runtime',
   });
@@ -18,7 +18,9 @@ self.addEventListener('install', function(event) {
           '/css/bootstrap.css',
           '/css/style.css',
           '/script/jquery-1.11.1.min.js',
-          '/script/main.js'
+          '/script/main.js',
+          '/script/author.js',          
+          '/author.html'
         ]
       );
     })
@@ -29,11 +31,11 @@ self.addEventListener('install', function(event) {
 // 1. stylesheet
 workbox.routing.registerRoute(
     new RegExp('\.css$'),
-    workbox.strategies.staleWhileRevalidate({
-        cacheName: 'My-awesome-cache-Stylesheets',
+    workbox.strategies.networkFirst({
+        cacheName: 'stylesheet-cache',
         plugins: [
             new workbox.expiration.Plugin({
-                maxAgeSeconds: 60 * 60 * 24 * 7, // cache for one week
+                maxAgeSeconds: 60 * 60 * 24 * 30, // cache for 30 days
                 maxEntries: 20, // only cache 20 request
                 purgeOnQuotaError: true
             })
@@ -41,22 +43,11 @@ workbox.routing.registerRoute(
     })
 );
 
-workbox.routing.registerRoute(
-    new RegExp('https://de-cdn-t1.eyo.net/t1-backend/image/upload/'),
-    workbox.strategies.staleWhileRevalidate({
-        cacheName: 'My-awesome-author-images',
-        cacheExpiration: {
-            maxAgeSeconds: 60 * 30 //cache the news content for 30mn
-        }
-    })
-);
-//https://de-cdn-t1.eyo.net/t1-backend/image/upload/v1574810374/DShkYjXu50h6FLgS9R2p1p3q4E4QGPu6qOFdltU2RdnOI8cPrVnNXpJ1ix4h66HspOrVMS3JxIKFWPziRJnee1xQgrsblMvoDEVdoqe75lGXNBxkGn3wk83acFAipZXFpGc4zwO8GHNlQ1AFDhT71MLPSe7gMqCryzmgs4AXkRX93ogqWX2lLbSR63R9YCAv/5b98bebb0a09a220f7550415.jpeg
-
 // 2. images
 workbox.routing.registerRoute(
     new RegExp('\.(png|svg|jpg|jpeg)$'),
     workbox.strategies.cacheFirst({
-        cacheName: 'My-awesome-cache-Images',
+        cacheName: 'image-cache',
         plugins: [
             new workbox.expiration.Plugin({
                 maxAgeSeconds: 60 * 60 * 24 * 7,
@@ -67,15 +58,36 @@ workbox.routing.registerRoute(
     })
 );
 
-// 3. cache news articles result
 workbox.routing.registerRoute(
-    new RegExp('https://de-t1.eyo.net/api/channels/'),
+    new RegExp('https://de-cdn-t1.eyo.net/t1-backend/image/upload/'),
     workbox.strategies.staleWhileRevalidate({
-        cacheName: 'My-awesome-cache-news-headline',
+        cacheName: 'staffbase-image-cache',
         cacheExpiration: {
             maxAgeSeconds: 60 * 30 //cache the news content for 30mn
         }
     })
 );
-  
+
+// 3. cache news articles result
+workbox.routing.registerRoute(
+    new RegExp('https://de-t1.eyo.net/api/channels/'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'staffbase-article-cache',
+        cacheExpiration: {
+            maxAgeSeconds: 60 * 30 //cache the news content for 30mn
+        }
+    })
+);
+
+// 3. cache news articles result
+workbox.routing.registerRoute(
+    new RegExp('https://de-t1.eyo.net/api/users/'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'staffbase-directory-cache',
+        cacheExpiration: {
+            maxAgeSeconds: 60 * 30 //cache the news content for 30mn
+        }
+    })
+);
+
 workbox.precaching.precacheAndRoute([]);

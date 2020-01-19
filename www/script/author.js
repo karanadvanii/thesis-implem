@@ -7,10 +7,10 @@ function append(parent, el) {
 }
 
 const API_KEY =
-  "NWRmNzk4MzU2MTk5NzljNWRjODI2MWQwOjhNa3YzZU44UzdIbGNXSVUoYkZSRUpsN3FsUCk4OWt7WVJlNGl9ZDNUMyxqdW9BTHNsbXZZVUZ2YUNSVWpIdlk=";
+  "NWUyMzA4MTc2ZmU1MDlhZGJhZTNhYzI1On0xQkZ9RnVibXZuTzhBLkxdTEtTZjR0dWVNSmxXVEFJRlFsTnZZIVlLRCRjRm90Z2NpR2JDMSlmNkUpQS4rbU4=";
 //const source = "5dddadb00a09a280cb7252df";
 const url = "https://de-t1.eyo.net/api/users/";
-const container = document.getElementById("data-entry");
+const container = document.getElementById("data-entry-author");
 
 let headers = new Headers();
 headers.append("Authorization", "Basic " + API_KEY);
@@ -24,8 +24,19 @@ fetch(url, { method: "GET", headers: headers })
 
       div.className = `col-xs-12 col-sm-12 col-md-12 frame`;
 
-      div.innerHTML =  `${user.profile.firstName}${user.profile.lastName}${user.profile.publicEmailAddress}${user.profile.phoneNumber}`;
-                        
+      div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper-directory">
+                            <div class="col-xs-2 col-sm-2 col-md-1 author-image">
+                                <img src=${user.avatar.thumb.url} class="img-responsive author-image-thumb-directory">
+                            </div>
+                            <div class="col-xs-10 col-sm-10 col-md-11 author-details">
+                                <p class="name-directory">${user.profile.firstName} ${user.profile.lastName}</p><br>
+
+                                <img src="../images/man.png" class="icons-directory"> <p class="position-directory"> ${user.profile.position} &#8226; ${user.profile.location} Office</p><br>
+                                <img src="../images/contact.png" class="icons-directory"> <p class="contact-directory"> ${user.profile.phoneNumber} &#8226; ${user.profile.publicEmailAddress} </p>
+                            </div>
+                        </div>`;
+    
+        
       append(container, div);
     });
   })
