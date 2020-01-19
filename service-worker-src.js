@@ -12,7 +12,7 @@ workbox.core.setCacheNameDetails({
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(cacheName).then(function(cache) {
+    caches.open('on-install').then(function(cache) {
       return cache.addAll(
         [
           '/css/bootstrap.css',
@@ -20,7 +20,11 @@ self.addEventListener('install', function(event) {
           '/script/jquery-1.11.1.min.js',
           '/script/main.js',
           '/script/author.js',          
-          '/author.html'
+          '/author.html',
+          'files/dummy.pdf',
+          'files/dummy.xls',
+          'files/dummy.doc',
+          'files/dummy.pptx'
         ]
       );
     })
@@ -50,7 +54,7 @@ workbox.routing.registerRoute(
         cacheName: 'image-cache',
         plugins: [
             new workbox.expiration.Plugin({
-                maxAgeSeconds: 60 * 60 * 24 * 7,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
                 maxEntries: 50,
                 purgeOnQuotaError: true
             })
@@ -63,29 +67,29 @@ workbox.routing.registerRoute(
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'staffbase-image-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 30 //cache the news content for 30mn
+            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
         }
     })
 );
 
-// 3. cache news articles result
+// 3. cache news articles images
 workbox.routing.registerRoute(
     new RegExp('https://de-t1.eyo.net/api/channels/'),
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'staffbase-article-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 30 //cache the news content for 30mn
+            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
         }
     })
 );
 
-// 3. cache news articles result
+// 4. cache news directory result
 workbox.routing.registerRoute(
     new RegExp('https://de-t1.eyo.net/api/users/'),
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'staffbase-directory-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 30 //cache the news content for 30mn
+            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
         }
     })
 );

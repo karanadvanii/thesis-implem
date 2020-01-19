@@ -24,10 +24,10 @@ fetch(url, { method: "GET", headers: headers })
       div.className = `col-xs-12 col-sm-12 col-md-12 frame`;
 
       div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
-                            <div class="col-xs-2 col-sm-2 col-md-1 author-image">
+                            <div class="col-xs-3 col-sm-1 col-md-1 author-image">
                                 <img src=${news.author.avatar.thumb.url} class="img-responsive author-image-thumb">
                             </div>
-                            <div class="col-xs-10 col-sm-10 col-md-11 author-details">
+                            <div class="col-xs-9 col-sm-11 col-md-11 author-details">
                                 <p class="name"><a class="author-id" href="author.html"> ${news.author.firstName} ${news.author.lastName}</a></p>
                                 <p class="date">${news.updated}</p>
                             </div>
@@ -35,8 +35,7 @@ fetch(url, { method: "GET", headers: headers })
                         <div class="col-xs-12 col-sm-12 col-md-12 article">
                             <p class="content-title">${news.contents.en_US.title}</p>
                             <p class="content-teaser">${news.contents.en_US.teaser}</p>
-                            <img src="${news.contents.en_US.image.compact_first.url}" class="article-image">
-                            <p class="content-content">${news.contents.en_US.content}</p>                            
+                            <img src="${news.contents.en_US.image.compact_first.url}" class="article-image">        
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 data-likes">
                             <hr>
@@ -131,4 +130,5 @@ fetch(urlSplit, { method: "GET", headers: headersSplit })
   .catch(function(error) {
     console.log(error);
   });
-  ///${news.author.id}
+// ${news.author.id}
+// <p class="content-content">${news.contents.en_US.content}</p>  
