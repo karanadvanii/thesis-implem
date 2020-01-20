@@ -15,7 +15,9 @@ body{
         padding: initial;
     }
 }
-
+img{
+    max-width: -webkit-fill-available;
+}
 .wrapper{
 /*    box-shadow: 4px 4px 10px #DCDCDC*/
 }
@@ -40,7 +42,30 @@ p.date{
     font-weight: 600;
     font-size: 23px;
     margin-bottom: 0px;
+    text-decoration: none;
 }
+.author-id:hover{
+    text-decoration: none;
+    color:#000;
+}
+
+a:visited { 
+    text-decoration: none;
+    color: inherit;
+}
+a:link { 
+    text-decoration: none;
+    color: inherit;
+}
+a:active { 
+    text-decoration: none;
+    color: inherit;
+}
+a:visited { 
+    text-decoration: none;
+    color: inherit;
+}
+
 h2{
     font-size: 18px;
 }
@@ -72,6 +97,9 @@ h2{
     border-radius: 5px;
     background: #fafafa;
 }
+#split-entry > div:nth-child(2){
+    float: right;
+}
 .frame-slider{
     padding: 0;
     margin-top: 2%;
@@ -82,7 +110,11 @@ h2{
     border: 1px solid white;
     border-radius: 90px;
 }
-
+@media (min-width: 992px){
+.frame-split{
+    width: 47.666667%;
+}
+}
 p{
     justify-content: center;
     font-size: 14px;
@@ -341,4 +373,47 @@ hr{
 }
 .author-details-directory-head{
     padding:1%;
+}
+.user-name{
+    font-size: 20px;
+    font-weight: 600;
+/*
+    padding:10px;
+    text-align: center;
+*/
+}
+.user-fields{
+    font-size: 16px;
+    font-weight: 300;
+    padding:10px;
+    text-align: center;
+}
+
+.user-contact-directory{
+    font-size: 13px;
+    font-weight: 300;
+    display: inline-block;
+    color: gray;
+    margin-bottom: 4px;
+    text-align: center;
+}
+.user-position-directory{
+    font-size: 16px;
+    font-weight: 300;
+    display: inline-block;
+    color: gray;
+    margin: 2% 0;
+    text-align: center;
+}
+.user-image{
+    height: 140px;
+    width: 140px;
+    border-radius: 10px;
+    margin: 2% 0;
+}
+
+.icons-user{
+    height: 18px;
+    width: 18px;
+    margin-right: 5px;
 }

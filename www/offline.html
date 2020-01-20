@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
   <link rel="manifest" href="/manifest.json">
-<!--  <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.7/pwacompat.min.js"></script>-->
+  <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.7/pwacompat.min.js"></script>
   <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
   <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
   <link href='//fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
@@ -30,7 +30,7 @@
 
     <div class="container">
       <div class="col-xs-12 col-sm-12 col-md-8 wrapper">
-        <div class="row data-entry" id="slider-entry"></div>
+        <div class="row data-entry" id="slider-entry">Offline</div>
         <div class="row data-entry" id="data-entry"></div>
         <div class="row data-entry" id="split-entry"></div>
       </div>
@@ -100,8 +100,6 @@
     </div>
     <div class="clearfix"></div>
 
-    <script src="script/main.js"></script>
-    <script src="script/post.js"></script>
     <script src="script/jquery-1.11.1.min.js"></script>
     <script>
       if ("serviceWorker" in navigator) {

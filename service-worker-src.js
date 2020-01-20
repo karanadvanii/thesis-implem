@@ -3,7 +3,6 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 workbox.skipWaiting();
 workbox.clientsClaim();
 
-// cache name
 workbox.core.setCacheNameDetails({
     prefix: 'cache',
     precache: 'precache',
@@ -15,33 +14,34 @@ self.addEventListener('install', function(event) {
     caches.open('on-install').then(function(cache) {
       return cache.addAll(
         [
+          '/',
           '/css/bootstrap.css',
           '/css/style.css',
           '/script/jquery-1.11.1.min.js',
           '/script/main.js',
-          '/script/author.js',          
+          '/script/author.js', 
+          '/script/article-single.js',
           '/author.html',
-          'files/dummy.pdf',
-          'files/dummy.xls',
-          'files/dummy.doc',
-          'files/dummy.pptx'
+          '/author-single.html',
+          '/offline.html',
+          '/404.html',
+          '/article-single.html'
         ]
       );
     })
   );
 });
 
-// runtime cache
-// 1. stylesheet
+ //runtime cache
+ //1. stylesheet
 workbox.routing.registerRoute(
     new RegExp('\.css$'),
-    workbox.strategies.networkFirst({
+    workbox.strategies.cacheFirst({
         cacheName: 'stylesheet-cache',
         plugins: [
             new workbox.expiration.Plugin({
                 maxAgeSeconds: 60 * 60 * 24 * 30, // cache for 30 days
-                maxEntries: 20, // only cache 20 request
-                purgeOnQuotaError: true
+                //purgeOnQuotaError: true
             })
         ]
     })
@@ -55,8 +55,7 @@ workbox.routing.registerRoute(
         plugins: [
             new workbox.expiration.Plugin({
                 maxAgeSeconds: 60 * 60 * 24 * 30,
-                maxEntries: 50,
-                purgeOnQuotaError: true
+                //purgeOnQuotaError: true
             })
         ]
     })
@@ -75,7 +74,7 @@ workbox.routing.registerRoute(
 // 3. cache news articles images
 workbox.routing.registerRoute(
     new RegExp('https://de-t1.eyo.net/api/channels/'),
-    workbox.strategies.staleWhileRevalidate({
+    workbox.strategies.cacheFirst({
         cacheName: 'staffbase-article-cache',
         cacheExpiration: {
             maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
@@ -83,11 +82,46 @@ workbox.routing.registerRoute(
     })
 );
 
-// 4. cache news directory result
+ // 4. cache news directory result
 workbox.routing.registerRoute(
     new RegExp('https://de-t1.eyo.net/api/users/'),
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'staffbase-directory-cache',
+        cacheExpiration: {
+            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
+        }
+    })
+);
+
+// 4. cache news directory result
+//workbox.routing.registerRoute(
+//    new RegExp('(.*)-single.html(.*)'),
+//    workbox.strategies.staleWhileRevalidate({
+//        cacheName: 'id-cache',
+//        cacheExpiration: {
+//            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
+//        }
+//    })
+//);
+
+const offlinePage = '/offline.html';
+
+workbox.routing.registerRoute(/(.*)-single.html(.*)/,
+  async ({event}) => {
+    try {
+      return await workbox.strategies.staleWhileRevalidate({
+          cacheName: 'WAOWAOAOWOWAOO-pages'
+      }).handle({event});
+    } catch (error) {
+      return caches.match(offlinePage);
+    }
+  }
+);
+
+workbox.routing.registerRoute(
+    new RegExp('https://de-t1.eyo.net/api/posts/'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'single-post-cache',
         cacheExpiration: {
             maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
         }

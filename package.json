@@ -8,7 +8,7 @@
   "scripts": {
     "run": "npm run build && npm run dev",
     "monaca:transpile": "npm run build",
-    "build": "workbox injectManifest workbox-config.js build --output public",
+    "build": "workbox injectManifest workbox-config.js",
     "dev": "browser-sync start -s www/ --watch --port 8080 --ui-port 8081"
   },
   "devDependencies": {

@@ -29,7 +29,7 @@ fetch(url, { method: "GET", headers: headers })
                                 <img src=${user.avatar.thumb.url} class="img-responsive author-image-thumb-directory">
                             </div>
                             <div class="col-xs-10 col-sm-10 col-md-11 author-details">
-                                <p class="name-directory">${user.profile.firstName} ${user.profile.lastName}</p><br>
+                                <a href="author-single.html?id=${user.id}"><p class="name-directory">${user.profile.firstName} ${user.profile.lastName}</p></a><br>
 
                                 <img src="../images/man.png" class="icons-directory"> <p class="position-directory"> ${user.profile.position} &#8226; ${user.profile.location} Office</p><br>
                                 <img src="../images/contact.png" class="icons-directory"> <p class="contact-directory"> ${user.profile.phoneNumber} &#8226; ${user.profile.publicEmailAddress} </p>
