@@ -7,7 +7,7 @@ function append(parent, el) {
 }
 
 const API_KEY =
-  "NWUyMzA4MTc2ZmU1MDlhZGJhZTNhYzI1On0xQkZ9RnVibXZuTzhBLkxdTEtTZjR0dWVNSmxXVEFJRlFsTnZZIVlLRCRjRm90Z2NpR2JDMSlmNkUpQS4rbU4=";
+  "NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=";
 //const source = "5dddadb00a09a280cb7252df";
 const url = "https://de-t1.eyo.net/api/users/";
 const container = document.getElementById("data-entry-author");
@@ -26,7 +26,7 @@ fetch(url, { method: "GET", headers: headers })
 
       div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper-directory">
                             <div class="col-xs-2 col-sm-2 col-md-1 author-image">
-                                <img src=${user.avatar.thumb.url} class="img-responsive author-image-thumb-directory">
+                                <a href="author-single.html?id=${user.id}"><img src=${user.avatar.icon.url} class="img-responsive author-image-thumb-directory"></a>
                             </div>
                             <div class="col-xs-10 col-sm-10 col-md-11 author-details">
                                 <a href="author-single.html?id=${user.id}"><p class="name-directory">${user.profile.firstName} ${user.profile.lastName}</p></a><br>

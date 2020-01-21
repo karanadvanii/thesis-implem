@@ -25,7 +25,10 @@ self.addEventListener('install', function(event) {
           '/author-single.html',
           '/offline.html',
           '/404.html',
-          '/article-single.html'
+          'files/dummy.pdf',
+          'files/dummy.xls',
+          'files/dummy.pptx',
+          'files/dummy.doc'
         ]
       );
     })
@@ -40,8 +43,7 @@ workbox.routing.registerRoute(
         cacheName: 'stylesheet-cache',
         plugins: [
             new workbox.expiration.Plugin({
-                maxAgeSeconds: 60 * 60 * 24 * 30, // cache for 30 days
-                //purgeOnQuotaError: true
+                maxAgeSeconds: 60 * 60 * 24 * 30, 
             })
         ]
     })
@@ -55,7 +57,18 @@ workbox.routing.registerRoute(
         plugins: [
             new workbox.expiration.Plugin({
                 maxAgeSeconds: 60 * 60 * 24 * 30,
-                //purgeOnQuotaError: true
+                purgeOnQuotaError: true
+            })
+        ]
+    })
+);
+workbox.routing.registerRoute(
+    new RegExp('\.(pdf|xls|pdf|pptx)$'),
+    workbox.strategies.cacheFirst({
+        cacheName: 'files-cache',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 30,
             })
         ]
     })
@@ -66,7 +79,7 @@ workbox.routing.registerRoute(
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'staffbase-image-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
+            maxAgeSeconds: 60 * 60 * 24 * 30 
         }
     })
 );
@@ -74,10 +87,10 @@ workbox.routing.registerRoute(
 // 3. cache news articles images
 workbox.routing.registerRoute(
     new RegExp('https://de-t1.eyo.net/api/channels/'),
-    workbox.strategies.cacheFirst({
+    workbox.strategies.networkFirst({
         cacheName: 'staffbase-article-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
+            maxAgeSeconds: 60 * 60 * 24 * 30 
         }
     })
 );
@@ -88,21 +101,10 @@ workbox.routing.registerRoute(
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'staffbase-directory-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
+            maxAgeSeconds: 60 * 60 * 24 * 30 
         }
     })
 );
-
-// 4. cache news directory result
-//workbox.routing.registerRoute(
-//    new RegExp('(.*)-single.html(.*)'),
-//    workbox.strategies.staleWhileRevalidate({
-//        cacheName: 'id-cache',
-//        cacheExpiration: {
-//            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
-//        }
-//    })
-//);
 
 const offlinePage = '/offline.html';
 
@@ -123,7 +125,7 @@ workbox.routing.registerRoute(
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'single-post-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 60 * 24 * 30 //cache the news content for 30mn
+            maxAgeSeconds: 60 * 60 * 24 * 30 
         }
     })
 );
