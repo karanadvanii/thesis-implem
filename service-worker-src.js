@@ -35,11 +35,9 @@ self.addEventListener('install', function(event) {
   );
 });
 
- //runtime cache
- //1. stylesheet
 workbox.routing.registerRoute(
     new RegExp('\.css$'),
-    workbox.strategies.cacheFirst({
+    workbox.strategies.staleWhileRevalidate({
         cacheName: 'stylesheet-cache',
         plugins: [
             new workbox.expiration.Plugin({
@@ -49,15 +47,22 @@ workbox.routing.registerRoute(
     })
 );
 
-// 2. images
 workbox.routing.registerRoute(
-    new RegExp('\.(png|svg|jpg|jpeg)$'),
+  /^https:\/\/fonts\.googleapis\.com/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'google-fonts-stylesheets',
+  })
+);
+
+workbox.routing.registerRoute(
+    new RegExp('\.(png|gif|jpg|jpeg|webp|svg)$'),
     workbox.strategies.cacheFirst({
         cacheName: 'image-cache',
         plugins: [
             new workbox.expiration.Plugin({
                 maxAgeSeconds: 60 * 60 * 24 * 30,
-                purgeOnQuotaError: true
+                purgeOnQuotaError: true,
+                maxEntries: 100
             })
         ]
     })
@@ -79,12 +84,13 @@ workbox.routing.registerRoute(
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'staffbase-image-cache',
         cacheExpiration: {
-            maxAgeSeconds: 60 * 60 * 24 * 30 
+            maxAgeSeconds: 60 * 60 * 24 * 30,
+            purgeOnQuotaError: true,
+            maxEntries: 100
         }
     })
 );
 
-// 3. cache news articles images
 workbox.routing.registerRoute(
     new RegExp('https://de-t1.eyo.net/api/channels/'),
     workbox.strategies.networkFirst({
@@ -112,7 +118,7 @@ workbox.routing.registerRoute(/(.*)-single.html(.*)/,
   async ({event}) => {
     try {
       return await workbox.strategies.staleWhileRevalidate({
-          cacheName: 'WAOWAOAOWOWAOO-pages'
+          cacheName: 'inner-pages'
       }).handle({event});
     } catch (error) {
       return caches.match(offlinePage);
@@ -124,10 +130,21 @@ workbox.routing.registerRoute(
     new RegExp('https://de-t1.eyo.net/api/posts/'),
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'single-post-cache',
-        cacheExpiration: {
-            maxAgeSeconds: 60 * 60 * 24 * 30 
-        }
+        plugins: [
+        new workbox.expiration.Plugin({
+          maxEntries: 50,
+          maxAgeSeconds: 5 * 60, // 5 minutes
+        }),
+        new workbox.cacheableResponse.Plugin({
+          statuses: [0, 200],
+        }),
+      ],
     })
+);
+
+// Use a stale-while-revalidate strategy for all other requests.
+workbox.routing.setDefaultHandler(
+  new workbox.strategies.StaleWhileRevalidate()
 );
 
 workbox.precaching.precacheAndRoute([]);

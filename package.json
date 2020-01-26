@@ -2,6 +2,7 @@
   "name": "monaca-pwa-template-minimum",
   "displayName": "Monaca PWA Template Minimum",
   "dependencies": {
+    "localforage": "^1.7.3",
     "now": "^16.7.3",
     "surge": "^0.21.3"
   },

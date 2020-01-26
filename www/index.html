@@ -10,6 +10,7 @@
   <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
   <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
   <link href='//fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Staffbase | Offline-First Web Application for Internal Communications</title>
@@ -28,7 +29,7 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
-
+<div id="status" class="online"> ONLINE </div>
     <div class="container">
       <div class="col-xs-12 col-sm-12 col-md-8 wrapper">
         <div class="row data-entry" id="slider-entry"></div>
@@ -96,27 +97,25 @@
             />&nbsp;&nbsp;ExcelSheet.xls</a
           >
           <hr class="hr-side" />
+            <a href="" id="lf"></a>
         </div>
       </div>
     </div>
     <div class="clearfix"></div>
 
+    
+    
     <script src="script/main.js"></script>
     <script src="script/jquery-1.11.1.min.js"></script>
+    <script src="script/localforage.js"></script>
+    <script src="script/db.js"></script>
+    
     <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(function(registration) {
-            console.log(
-              "ServiceWorker registration successful with scope: ",
-              registration.scope
-            );
-          })
-          .catch(function(err) {
-            console.log("ServiceWorker registration failed: ", err);
-          });
-      }
+      if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js');
+  });
+}
     </script>
     <script>
       function myFunction() {

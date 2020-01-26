@@ -2,6 +2,20 @@ body{
     background:#f6f6f6;
     font-family: 'Open Sans', 'Helvetica Neue', 'Lucida Grande', Helvetica, Arial, sans-serif
 }
+#status {
+  width: 100%;
+  font: bold 1em sans-serif;
+  color: #f6f6f6;
+  padding: 0.2em;
+}
+
+.online {
+  background: #f6f6f6;
+}
+
+.offline {
+  background: red;
+}
 .author-image{
     padding: 0px;
     background: #fafafa;

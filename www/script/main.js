@@ -6,6 +6,8 @@ function append(parent, el) {
   return parent.appendChild(el);
 }
 
+
+
 const API_KEY =
   "NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=";
 const source = "5e2629736199791aeb6d740f";
@@ -45,11 +47,12 @@ fetch(url, { method: "GET", headers: headers })
                         </div>
                         <div class="clearfix"></div>`;
       append(container, div);
-    });
+    }); 
   })
   .catch(function(error) {
     console.log(error);
   });
+
 
 
 const API_KEY2 =
@@ -132,5 +135,32 @@ fetch(urlSplit, { method: "GET", headers: headersSplit })
   .catch(function(error) {
     console.log(error);
   });
+
+window.addEventListener('DOMContentLoaded', function() {
+  var status = document.getElementById("status");
+
+  function updateOnlineStatus(event) {
+    var condition = navigator.onLine ? "online" : "offline";
+
+    status.className = condition;
+    status.innerHTML = condition.toUpperCase();
+  }
+  window.addEventListener('online',  updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+});
+
+
+
+
+//localforage.getItem('users').then(function(value) {
+//    var httt = document.getElementById("lf");
+//    httt.innerHTML = JSON.stringify(value);
+//    console.log(value);
+//}).catch(function(err) {
+//    // This code runs if there were any errors
+//    console.log(err);
+//});
+
+
 // ${news.author.id}
 // <p class="content-content">${news.contents.en_US.content}</p>  
