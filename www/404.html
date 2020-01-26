@@ -5,14 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
   <link rel="manifest" href="/manifest.json">
-  <link rel="shortcut icon" href="images/icons/Icon-48.png" type="image/x-icon">   
+  <link rel="shortcut icon" href="images/icons/Icon-48.png" type="image/x-icon">
   <link rel="icon" href="images/icons/Icon-48.png" type="image/x-icon">
   <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
   <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
   <link href='//fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Staffbase | Offline-First Web Application for Internal Communications</title>
+  <title>Offline-First Mobile Application</title>
 </head>
 <body>
     <div class="topnav">
@@ -20,20 +19,17 @@
         ><img src="images/staffbase.png"
       /></a>
       <div id="myLinks">
-        <!--<a href="#news">Post News</a>-->
         <a href="author.html">Employee Directory</a>
-        <!--<a href="#about">About</a>-->
       </div>
       <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
       </a>
     </div>
-
+    <div id="status" class="online"> ONLINE </div>
     <div class="container">
       <div class="col-xs-12 col-sm-12 col-md-8 wrapper">
         <div class="row data-entry" id="slider-entry">404</div>
       </div>
-
       <div class="col-xs-12 col-sm-12 col-md-4">
         <div class="col-xs-12 col-sm-12 col-md-12" class="rhs-heading">
           <h4>Quick Links</h4>
@@ -62,56 +58,27 @@
           <h4>Documents</h4>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 frame-rhs">
-          <a href="files/dummy.pdf" class="side-links"
-            ><img
-              src="images/pdf.png"
-              height="20"
-              width="20"
-            />&nbsp;&nbsp;AcrobatReader.pdf</a
-          >
+          <a href="files/dummy.pdf" class="side-links"><img src="images/pdf.png" height="20" width="20"/>&nbsp;&nbsp;AcrobatReader.pdf</a>
           <hr class="hr-side" />
-          <a href="files/dummy.pptx" class="side-links"
-            ><img
-              src="images/ppt.png"
-              height="20"
-              width="20"
-            />&nbsp;&nbsp;Powerpoint.ppt</a
-          >
+          <a href="files/dummy.pdf" class="side-links"><img src="images/pdf.png" height="20" width="20"/>&nbsp;&nbsp;Powerpoint.pdf</a>
           <hr class="hr-side" />
-          <a href="files/dummy.doc" class="side-links"
-            ><img
-              src="images/doc.png"
-              height="20"
-              width="20"
-            />&nbsp;&nbsp;Word.doc</a
-          >
+          <a href="files/dummy.pdf" class="side-links"><img src="images/pdf.png" height="20" width="20"/>&nbsp;&nbsp;Powerpoint.ppt</a>
           <hr class="hr-side" />
-          <a href="files/dummy.xls" class="side-links"
-            ><img
-              src="images/xls.png"
-              height="20"
-              width="20"
-            />&nbsp;&nbsp;ExcelSheet.xls</a
-          >
+          <a href="files/dummy.pdf" class="side-links"><img src="images/pdf.png" height="20" width="20"/>&nbsp;&nbsp;Word.doc</a>
           <hr class="hr-side" />
+          <a href="files/dummy.pdf" class="side-links"><img src="images/pdf.png" height="20" width="20"/>&nbsp;&nbsp;ExcelSheet.xls</a>
         </div>
       </div>
     </div>
     <div class="clearfix"></div>
-
+    <script src="script/main.js"></script>
     <script src="script/jquery-1.11.1.min.js"></script>
+    <script src="script/localforage.js"></script>
+    <script src="script/db.js"></script>
     <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(function(registration) {
-            console.log(
-              "ServiceWorker registration successful with scope: ",
-              registration.scope
-            );
-          })
-          .catch(function(err) {
-            console.log("ServiceWorker registration failed: ", err);
+      if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js');
           });
       }
     </script>
@@ -125,5 +92,19 @@
         }
       }
     </script>
-  </body>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+          var status = document.getElementById("status");
+
+          function updateOnlineStatus(event) {
+            var condition = navigator.onLine ? "online" : "offline";
+
+            status.className = condition;
+            status.innerHTML = condition.toUpperCase();
+          }
+          window.addEventListener('online',  updateOnlineStatus);
+          window.addEventListener('offline', updateOnlineStatus);
+        });
+    </script>
+    </body>
 </html>

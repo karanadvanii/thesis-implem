@@ -143,8 +143,8 @@ workbox.routing.registerRoute(
 );
 
 // Use a stale-while-revalidate strategy for all other requests.
-workbox.routing.setDefaultHandler(
-  new workbox.strategies.StaleWhileRevalidate()
-);
+//workbox.routing.setDefaultHandler(
+//  new workbox.strategies.StaleWhileRevalidate()
+//);
 
 workbox.precaching.precacheAndRoute([]);

@@ -21,6 +21,7 @@
 const store = localforage.createInstance({
   name: 'store'
 });
+
 const filePath = 'files/dummy.pdf';
 const fileName = 'dummy.pdf';
 
