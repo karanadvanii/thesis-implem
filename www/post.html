@@ -1,0 +1,35 @@
+<form  id="postData">
+    <div>
+        <input type="text" name="" id="tittle">
+    </div>
+    <div>
+        <textarea name="" id="body" cols="20" rows="5"></textarea>
+    </div>
+    <input type="submit" value="SEND POST">
+</form>
+
+<script>
+document.getElementById('postData').addEventListener('submit', postData);
+
+    
+ function postData(event){
+            event.preventDefault();
+            let headers = new Headers();
+            headers.append("Content-Type", "application/json");
+            const API_KEY ="NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=";
+            headers.append("Authorization", "Basic " + API_KEY);
+            let tittle = document.getElementById('tittle').value;
+            let body = document.getElementById('body').value;
+
+            fetch('https://de-t1.eyo.net/api/channels/5e307c45619979a13c653e79/posts', {
+                method: 'POST',
+                headers : headers,
+                body:JSON.stringify({externalID:"1234567891123",contents:{en_US:{content: "his is the content",image:"https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/v1580118196/o2eqGnRpOVJZe27JoH0w3yp4tSWU9pcpUHS17FkrQG1afjDmx7IGXcDd1nBIKbkdC6q4LsQmDpxieRauDD93kMmXOTVDBTklVLkMML91Cd2jc1CXKpEZthjX8JpHz0FUFbHmMbbXsTkQQlCSsPpPUr1I1y5EkqbneeLUr1agEOiAtIpE96derkvNiceopljL/u5ba8a05d0a09a25b017e08d3/photo-1510146758428-e5e4b17b8b6a.jpeg", teaser: "teasdgsgf", title: "a title"}},published:"2020-01-28T09:14:39.171Z"})
+            }).then((res) => res.json())
+            .then((data) =>  console.log(data))
+            .catch((err)=>console.log(err))
+        }
+</script>
+
+
+

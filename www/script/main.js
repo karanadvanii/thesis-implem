@@ -135,6 +135,54 @@ fetch(urlSplit, { method: "GET", headers: headersSplit })
     console.log(error);
   });
 
+
+//for post
+const API_KEY4 =
+  "NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=";
+const sourcePost = "5e307c45619979a13c653e79";
+const urlPost = "https://de-t1.eyo.net/api/channels/" + sourcePost + "/posts";
+const containerPost = document.getElementById("post-entry");
+
+let headersPost = new Headers();
+headersPost.append("Authorization", "Basic " + API_KEY);
+
+fetch(urlPost, { method: "GET", headers: headersPost })
+  .then(resp => resp.json())
+  .then(function(data) {
+    let newsPost = data.data;
+    return newsPost.map(function(newsPost) {
+      let div = createNode("div");
+      div.className = `col-xs-12 col-sm-12 col-md-12 frame`;
+
+      div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
+                            <div class="col-xs-3 col-sm-1 col-md-1 author-image">
+                                <a class="author-id" href="#"><img src="https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/c_crop,w_2707,h_2707,x_137,y_420/c_fill,w_200,h_200/v1579602614/3I1RsaQZIkint4Olt2GyAXWVYiHP7Yh4CzZS0DSkXKQohGgKakepnPpmrBPW2fioajP9eNmNZvQg9Gi281hdoITVDDNg5RBIRqifL65mDp6GRcVT2Ph6CGspSL6vgSec47JeThhKfzGYAueED6NXXXHb3CcxRk5mJDdN1MLGTTJ7mO0KPvdr1b2beZs3C5Bo/5ba8a05d0a09a25b017e08d3.jpeg"  class="img-responsive author-image-thumb"></a>
+                            </div>
+                            <div class="col-xs-9 col-sm-11 col-md-11 author-details">
+                                <p class="name"><a class="author-id" href="#"> ${newsPost.source.name}</a></p>
+                                <p class="date">${new Date(newsPost.updated).toDateString()}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 article">
+                            <a class="author-id" href="article-single.html?id=${newsPost.id}">
+                                <p class="content-title">${newsPost.contents.en_US.title}</p>
+                                <p class="content-teaser">${newsPost.contents.en_US.teaser}</p>
+                                <img src=${newsPost.contents.en_US.image.compact_first.url} class="article-image">
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 data-likes">
+                            <hr>
+                            <img src="../images/001-heart.png">${newsPost.likes.total}
+                        </div>
+                        <div class="clearfix"></div>`;
+      append(containerPost, div);
+        
+    }); 
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
 //localforage.getItem('users').then(function(value) {
 //    var httt = document.getElementById("lf");
 //    httt.innerHTML = JSON.stringify(value);
