@@ -4,7 +4,8 @@
   "dependencies": {
     "localforage": "^1.7.3",
     "now": "^16.7.3",
-    "surge": "^0.21.3"
+    "surge": "^0.21.3",
+    "workbox-background-sync": "latest"
   },
   "scripts": {
     "run": "npm run build && npm run dev",
