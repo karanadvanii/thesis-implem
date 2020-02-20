@@ -1,6 +1,8 @@
 {
-  "name": "monaca-pwa-template-minimum",
-  "displayName": "Monaca PWA Template Minimum",
+  "name": "offline-first-prototype",
+  "displayName": "Offline First Application ",
+  "version": "1.0.0",
+  "private": true,
   "dependencies": {
     "localforage": "^1.7.3",
     "now": "^16.7.3",
