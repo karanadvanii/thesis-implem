@@ -15,6 +15,21 @@ const container = document.getElementById("data-entry");
 let headers = new Headers();
 headers.append("Authorization", "Basic " + API_KEY);
 
+function getFuckingFullname(newsItem) {
+    if (newsItem.author) {
+        return `${newsItem.author.firstName} ${newsItem.author.lastName}`
+    } else if (newsItem.source) {
+        return `${newsItem.source.name}`
+    }
+}
+
+function getFunckingAvatar(newsItem) {
+    if (newsItem.author && newsItem.author.avatar) {
+        return newsItem.author.avatar.thumb.url;
+    }
+    return "https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/c_thumb,g_face,h_200,w_200/v1579596376/H2I6wLh5XCBLIVu7nHRNGx0WuLxUu5WMlx4ycYvtivqWq01hfToB94toLRVEcoqySw4DkETsAN8XkhCOHts5rQOfVYODg5oelWVfH3WIQVq4KGOXMbjbR0R4O9Oa9Hwu3E4YyollSOZiw1e9bt3PC2dgXgraZv3on0TRVPCx1DANZSZUmY78Q3d5FU01zsVc/5c90d78d0a09a2d6248a1d64.jpeg";
+}
+
 fetch(url, { method: "GET", headers})
   .then(resp => resp.json())
   .then(function(data) {
@@ -25,10 +40,10 @@ fetch(url, { method: "GET", headers})
 
       div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
                             <div class="col-xs-3 col-sm-1 col-md-1 author-image">
-                                <a class="author-id" href="author-single.html?id=${newsItem.source ? newsItem.source.name : ''}"><img src=${newsItem.author ? newsItem.author.avatar.thumb.url : ''} class="img-responsive author-image-thumb"></a>
+                                <a class="author-id" href="author-single.html?id=${newsItem.source ? newsItem.source.name : ''}"><img src=${getFunckingAvatar(newsItem)} class="img-responsive author-image-thumb"></a>
                             </div>
                             <div class="col-xs-9 col-sm-11 col-md-11 author-details">
-                                <p class="name"><a class="author-id" href="author-single.html?id=${newsItem.author ? newsItem.author.id : ''}"> ${newsItem.author ? newsItem.author.firstName : ''} ${newsItem.author ? newsItem.author.lastName : ''}</a></p>
+                                <p class="name"><a class="author-id" href="author-single.html?id=${newsItem.author ? newsItem.author.id : ''}">${getFuckingFullname(newsItem)}</a></p>
                                 <p class="date">${new Date(newsItem.updated).toDateString()}</p>
                             </div>
                         </div>
@@ -36,7 +51,7 @@ fetch(url, { method: "GET", headers})
                             <a class="author-id" href="article-single.html?id=${newsItem.id}">
                                 <p class="content-title">${newsItem.contents.en_US.title}</p>
                                 <p class="content-teaser">${newsItem.contents.en_US.teaser}</p>
-                                <img src="${newsItem.contents.en_US.image ? newsItem.contents.en_US.image.compact_first.url : ''}" class="article-image">
+                                <img src="${newsItem.contents.en_US.image ? newsItem.contents.en_US.image.original.url : ''}" class="article-image">
                             </a>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 data-likes">
