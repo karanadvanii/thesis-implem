@@ -15,7 +15,26 @@ const container = document.getElementById("data-entry");
 let headers = new Headers();
 headers.append("Authorization", "Basic " + API_KEY);
 
+<<<<<<< Updated upstream
 fetch(url, { method: "GET", headers: headers })
+=======
+function getFullname(newsItem) {
+    if (newsItem.author) {
+        return `${newsItem.author.firstName} ${newsItem.author.lastName}`
+    } else if (newsItem.source) {
+        return `${newsItem.source.name}`
+    }
+}
+
+function getAvatar(newsItem) {
+    if (newsItem.author && newsItem.author.avatar) {
+        return newsItem.author.avatar.thumb.url;
+    }
+    return "https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/c_crop,w_2707,h_2707,x_137,y_420/c_fill,w_200,h_200/v1579602614/3I1RsaQZIkint4Olt2GyAXWVYiHP7Yh4CzZS0DSkXKQohGgKakepnPpmrBPW2fioajP9eNmNZvQg9Gi281hdoITVDDNg5RBIRqifL65mDp6GRcVT2Ph6CGspSL6vgSec47JeThhKfzGYAueED6NXXXHb3CcxRk5mJDdN1MLGTTJ7mO0KPvdr1b2beZs3C5Bo/5ba8a05d0a09a25b017e08d3.jpeg";
+}
+
+fetch(url, { method: "GET", headers})
+>>>>>>> Stashed changes
   .then(resp => resp.json())
   .then(function(data) {
     let news = data.data;
@@ -25,11 +44,19 @@ fetch(url, { method: "GET", headers: headers })
 
       div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
                             <div class="col-xs-3 col-sm-1 col-md-1 author-image">
+<<<<<<< Updated upstream
                                 <a class="author-id" href="author-single.html?id=${news.author.id}"><img src=${news.author.avatar.thumb.url} class="img-responsive author-image-thumb"></a>
                             </div>
                             <div class="col-xs-9 col-sm-11 col-md-11 author-details">
                                 <p class="name"><a class="author-id" href="author-single.html?id=${news.author.id}"> ${news.author.firstName} ${news.author.lastName}</a></p>
                                 <p class="date">${new Date(news.updated).toDateString()}</p>
+=======
+                                <a class="author-id" href="author-single.html?id=${newsItem.source ? newsItem.source.name : newsItem.author.id}"><img src=${getAvatar(newsItem)} class="img-responsive author-image-thumb"></a>
+                            </div>
+                            <div class="col-xs-9 col-sm-11 col-md-11 author-details">
+                                <p class="name"><a class="author-id" href="author-single.html?id=${newsItem.author ? newsItem.author.id : ''}">${getFullname(newsItem)}</a></p>
+                                <p class="date">${new Date(newsItem.updated).toDateString()}</p>
+>>>>>>> Stashed changes
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 article">
