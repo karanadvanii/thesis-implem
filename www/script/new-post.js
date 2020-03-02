@@ -3,7 +3,7 @@ newPostForm.addEventListener('submit', async function (e) {
     e.preventDefault();
     const [title, teaser, content, fileInput] = e.target.elements;
     const data = {
-        published: "2016-07-22T09:14:39.171Z",
+        published: "2020-03-02T18:50:39.171Z",
         contents: {
             en_US: {
                 title: title.value,
@@ -49,15 +49,15 @@ function postImage(file) {
 }
 
 // Temporarily added functions here because dynamic import doesn't work properly in such scenario.
-import {Queue} from '../../node_modules/workbox-background-sync/Queue.js';
-const queue = new Queue('myQueueName');
-self.addEventListener('fetch', (event) => {
-    // Clone the request to ensure it's safe to read when
-    // adding to the Queue.
-    console.log('Syncing!!!');
-    const promiseChain = fetch(event.request.clone()).catch((err) => {
-        return queue.pushRequest({request: event.request});
-    });
-
-    event.waitUntil(promiseChain);
-});
+//import {Queue} from '../../node_modules/workbox-background-sync/Queue.js';
+//const queue = new Queue('myQueueName');
+//self.addEventListener('fetch', (event) => {
+//    // Clone the request to ensure it's safe to read when
+//    // adding to the Queue.
+//    console.log('Syncing!!!');
+//    const promiseChain = fetch(event.request.clone()).catch((err) => {
+//        return queue.pushRequest({request: event.request});
+//    });
+//
+//    event.waitUntil(promiseChain);
+//});

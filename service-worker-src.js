@@ -117,7 +117,27 @@ workbox.routing.registerRoute(
     })
 );
 
+workbox.routing.registerRoute(
+    /(http[s]?:\/\/)?([^\/\s]+\/)/,
+    workbox.strategies.networkOnly({
+      plugins: [
+        new workbox.backgroundSync.Plugin('requestsQueue', {
+          maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+        })
+      ]
+    }),
+    'POST'
+  );
+
+
+// Use a stale-while-revalidate strategy for all other requests.
+//workbox.routing.setDefaultHandler(
+//  new workbox.strategies.StaleWhileRevalidate()
+//);
+
 workbox.precaching.precacheAndRoute([]);
+
+
 
 
 //self.addEventListener('install', function(event) {
