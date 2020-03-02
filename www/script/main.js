@@ -15,9 +15,6 @@ const container = document.getElementById("data-entry");
 let headers = new Headers();
 headers.append("Authorization", "Basic " + API_KEY);
 
-<<<<<<< Updated upstream
-fetch(url, { method: "GET", headers: headers })
-=======
 function getFullname(newsItem) {
     if (newsItem.author) {
         return `${newsItem.author.firstName} ${newsItem.author.lastName}`
@@ -34,41 +31,32 @@ function getAvatar(newsItem) {
 }
 
 fetch(url, { method: "GET", headers})
->>>>>>> Stashed changes
   .then(resp => resp.json())
   .then(function(data) {
-    let news = data.data;
-    return news.map(function(news) {
+    let newsList = data.data;
+    return newsList.map(function(newsItem) {
       let div = createNode("div");
       div.className = `col-xs-12 col-sm-12 col-md-12 frame`;
 
       div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
                             <div class="col-xs-3 col-sm-1 col-md-1 author-image">
-<<<<<<< Updated upstream
-                                <a class="author-id" href="author-single.html?id=${news.author.id}"><img src=${news.author.avatar.thumb.url} class="img-responsive author-image-thumb"></a>
-                            </div>
-                            <div class="col-xs-9 col-sm-11 col-md-11 author-details">
-                                <p class="name"><a class="author-id" href="author-single.html?id=${news.author.id}"> ${news.author.firstName} ${news.author.lastName}</a></p>
-                                <p class="date">${new Date(news.updated).toDateString()}</p>
-=======
                                 <a class="author-id" href="author-single.html?id=${newsItem.source ? newsItem.source.name : newsItem.author.id}"><img src=${getAvatar(newsItem)} class="img-responsive author-image-thumb"></a>
                             </div>
                             <div class="col-xs-9 col-sm-11 col-md-11 author-details">
                                 <p class="name"><a class="author-id" href="author-single.html?id=${newsItem.author ? newsItem.author.id : ''}">${getFullname(newsItem)}</a></p>
                                 <p class="date">${new Date(newsItem.updated).toDateString()}</p>
->>>>>>> Stashed changes
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 article">
-                            <a class="author-id" href="article-single.html?id=${news.id}">
-                                <p class="content-title">${news.contents.en_US.title}</p>
-                                <p class="content-teaser">${news.contents.en_US.teaser}</p>
-                                <img src="${news.contents.en_US.image.compact_first.url}" class="article-image">
+                            <a class="author-id" href="article-single.html?id=${newsItem.id}">
+                                <p class="content-title">${newsItem.contents.en_US.title}</p>
+                                <p class="content-teaser">${newsItem.contents.en_US.teaser}</p>
+                                <img src="${newsItem.contents.en_US.image ? newsItem.contents.en_US.image.original.url : ''}" class="article-image">
                             </a>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 data-likes">
                             <hr>
-                            <img src="../images/001-heart.png">${news.likes.total}<img src="../images/002-speech-bubble.png">${news.comments.total}
+                            <img src="../images/001-heart.png">${newsItem.likes.total}<img src="../images/002-speech-bubble.png">${newsItem.comments.total}
                         </div>
                         <div class="clearfix"></div>`;
       append(container, div);
