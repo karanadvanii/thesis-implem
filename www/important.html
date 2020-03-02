@@ -19,16 +19,10 @@
         ><img src="images/staffbase_ext.png"/></a>
       <div id="myLinks">
         <a href="author.html">Employee Directory</a>
-<<<<<<< Updated upstream
-        <a href="#">CEO's Messages</a>
-        <a href="#">Public Wall</a>
-        <a href="#">Important Communication</a>
-=======
         <a href="ceo.html">CEO's Messages</a>
         <a href="publicwall.html">Public Wall</a>
         <a href="important.html">Important Communication</a>
         <a href="handbook.html">Employee Handbook</a>
->>>>>>> Stashed changes
       </div>
       <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
@@ -80,7 +74,7 @@
           </div>
         </div>
         <div class="clearfix"></div>
-        <script src="script/main.js"></script>
+<!--        <script src="script/main.js"></script>-->
         <script src="script/jquery-1.11.1.min.js"></script>
         <script src="script/localforage.js"></script>
         <script src="script/db.js"></script>
@@ -114,6 +108,76 @@
           window.addEventListener('online',  updateOnlineStatus);
           window.addEventListener('offline', updateOnlineStatus);
         });
+    </script>
+    <script>
+    function createNode(element) {
+      return document.createElement(element);
+    }
+
+    function append(parent, el) {
+      return parent.appendChild(el);
+    }
+
+    const API_KEY =
+      "NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=";
+    const source = "5e2629806199791aeb6d7441";
+    const url = "https://de-t1.eyo.net/api/channels/" + source + "/posts";
+    const container = document.getElementById("data-entry");
+
+    let headers = new Headers();
+    headers.append("Authorization", "Basic " + API_KEY);
+
+    function getFullname(newsItem) {
+        if (newsItem.author) {
+            return `${newsItem.author.firstName} ${newsItem.author.lastName}`
+        } else if (newsItem.source) {
+            return `${newsItem.source.name}`
+        }
+    }
+
+    function getAvatar(newsItem) {
+        if (newsItem.author && newsItem.author.avatar) {
+            return newsItem.author.avatar.thumb.url;
+        }
+        return "https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/c_crop,w_2707,h_2707,x_137,y_420/c_fill,w_200,h_200/v1579602614/3I1RsaQZIkint4Olt2GyAXWVYiHP7Yh4CzZS0DSkXKQohGgKakepnPpmrBPW2fioajP9eNmNZvQg9Gi281hdoITVDDNg5RBIRqifL65mDp6GRcVT2Ph6CGspSL6vgSec47JeThhKfzGYAueED6NXXXHb3CcxRk5mJDdN1MLGTTJ7mO0KPvdr1b2beZs3C5Bo/5ba8a05d0a09a25b017e08d3.jpeg";
+    }
+
+    fetch(url, { method: "GET", headers})
+      .then(resp => resp.json())
+      .then(function(data) {
+        let newsList = data.data;
+        return newsList.map(function(newsItem) {
+          let div = createNode("div");
+          div.className = `col-xs-12 col-sm-12 col-md-12 frame`;
+
+          div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
+                                <div class="col-xs-3 col-sm-1 col-md-1 author-image">
+                                    <a class="author-id" href="author-single.html?id=${newsItem.source ? newsItem.source.name : ''}"><img src=${getAvatar(newsItem)} class="img-responsive author-image-thumb"></a>
+                                </div>
+                                <div class="col-xs-9 col-sm-11 col-md-11 author-details">
+                                    <p class="name"><a class="author-id" href="author-single.html?id=${newsItem.author ? newsItem.author.id : ''}">${getFullname(newsItem)}</a></p>
+                                    <p class="date">${new Date(newsItem.updated).toDateString()}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 article">
+                                <a class="author-id" href="article-single.html?id=${newsItem.id}">
+                                    <p class="content-title">${newsItem.contents.en_US.title}</p>
+                                    <p class="content-teaser">${newsItem.contents.en_US.teaser}</p>
+                                    <img src="${newsItem.contents.en_US.image ? newsItem.contents.en_US.image.original.url : ''}" class="article-image">
+                                </a>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 data-likes">
+                                <hr>
+                                <img src="../images/001-heart.png">${newsItem.likes.total}<img src="../images/002-speech-bubble.png">${newsItem.comments.total}
+                            </div>
+                            <div class="clearfix"></div>`;
+          append(container, div);
+
+        }); 
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     </script>
     </body>
 </html>

@@ -15,7 +15,7 @@ const container = document.getElementById("data-entry");
 let headers = new Headers();
 headers.append("Authorization", "Basic " + API_KEY);
 
-function getFuckingFullname(newsItem) {
+function getFullname(newsItem) {
     if (newsItem.author) {
         return `${newsItem.author.firstName} ${newsItem.author.lastName}`
     } else if (newsItem.source) {
@@ -23,11 +23,11 @@ function getFuckingFullname(newsItem) {
     }
 }
 
-function getFunckingAvatar(newsItem) {
+function getAvatar(newsItem) {
     if (newsItem.author && newsItem.author.avatar) {
         return newsItem.author.avatar.thumb.url;
     }
-    return "https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/c_thumb,g_face,h_200,w_200/v1579596376/H2I6wLh5XCBLIVu7nHRNGx0WuLxUu5WMlx4ycYvtivqWq01hfToB94toLRVEcoqySw4DkETsAN8XkhCOHts5rQOfVYODg5oelWVfH3WIQVq4KGOXMbjbR0R4O9Oa9Hwu3E4YyollSOZiw1e9bt3PC2dgXgraZv3on0TRVPCx1DANZSZUmY78Q3d5FU01zsVc/5c90d78d0a09a2d6248a1d64.jpeg";
+    return "https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/c_crop,w_2707,h_2707,x_137,y_420/c_fill,w_200,h_200/v1579602614/3I1RsaQZIkint4Olt2GyAXWVYiHP7Yh4CzZS0DSkXKQohGgKakepnPpmrBPW2fioajP9eNmNZvQg9Gi281hdoITVDDNg5RBIRqifL65mDp6GRcVT2Ph6CGspSL6vgSec47JeThhKfzGYAueED6NXXXHb3CcxRk5mJDdN1MLGTTJ7mO0KPvdr1b2beZs3C5Bo/5ba8a05d0a09a25b017e08d3.jpeg";
 }
 
 fetch(url, { method: "GET", headers})
@@ -40,10 +40,10 @@ fetch(url, { method: "GET", headers})
 
       div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
                             <div class="col-xs-3 col-sm-1 col-md-1 author-image">
-                                <a class="author-id" href="author-single.html?id=${newsItem.source ? newsItem.source.name : ''}"><img src=${getFunckingAvatar(newsItem)} class="img-responsive author-image-thumb"></a>
+                                <a class="author-id" href="author-single.html?id=${newsItem.source ? newsItem.source.name : newsItem.author.id}"><img src=${getAvatar(newsItem)} class="img-responsive author-image-thumb"></a>
                             </div>
                             <div class="col-xs-9 col-sm-11 col-md-11 author-details">
-                                <p class="name"><a class="author-id" href="author-single.html?id=${newsItem.author ? newsItem.author.id : ''}">${getFuckingFullname(newsItem)}</a></p>
+                                <p class="name"><a class="author-id" href="author-single.html?id=${newsItem.author ? newsItem.author.id : ''}">${getFullname(newsItem)}</a></p>
                                 <p class="date">${new Date(newsItem.updated).toDateString()}</p>
                             </div>
                         </div>
