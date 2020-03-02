@@ -9,31 +9,6 @@ workbox.core.setCacheNameDetails({
     runtime: 'runtime',
   });
 
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open('on-install').then(function(cache) {
-      return cache.addAll(
-        [
-          '/',
-          '/css/bootstrap.css',
-          '/css/style.css',
-          '/script/jquery-1.11.1.min.js',
-          '/script/main.js',
-          '/script/author.js', 
-          '/script/article-single.js',
-          '/author.html',
-          '/author-single.html',
-          '/offline.html',
-          '/404.html',
-          'files/dummy.pdf',
-          'files/dummy.xls',
-          'files/dummy.pptx',
-          'files/dummy.doc'
-        ]
-      );
-    })
-  );
-});
 
 workbox.routing.registerRoute(
     new RegExp('\.css$'),
@@ -142,9 +117,33 @@ workbox.routing.registerRoute(
     })
 );
 
+workbox.precaching.precacheAndRoute([]);
+
+
+//self.addEventListener('install', function(event) {
+//  event.waitUntil(
+//    caches.open('on-install').then(function(cache) {
+//      return cache.addAll(
+//        [
+//          '/',
+//          '/css/bootstrap.css',
+//          '/css/style.css',
+//          '/script/jquery-1.11.1.min.js',
+//          '/script/main.js',
+//          '/script/author.js', 
+//          '/script/article-single.js',
+//          '/author.html',
+//          '/author-single.html',
+//          '/offline.html',
+//          '/404.html'
+//        ]
+//      );
+//    })
+//  );
+//});
+
 // Use a stale-while-revalidate strategy for all other requests.
 //workbox.routing.setDefaultHandler(
 //  new workbox.strategies.StaleWhileRevalidate()
 //);
 
-workbox.precaching.precacheAndRoute([]);
