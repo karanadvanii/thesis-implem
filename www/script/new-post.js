@@ -9,7 +9,7 @@ newPostForm.addEventListener('submit', async function (e) {
                 title: title.value,
                 teaser: teaser.value,
                 content: content.value,
-                image: JSON.stringify(await postImage(fileInput.files[0]))
+                image: await postImage(fileInput.files[0])
             }
         }
     };
@@ -45,7 +45,8 @@ function postImage(file) {
         body: formData,
     };
     return fetch("https://de-t1.eyo.net/upload/images;wesessid=m3xtuazvfnxsvdiwamnrq61k5193", options)
-        .then(response => response.json());
+        .then(response => response.json())
+        .catch(error => console.log('error', error));
 }
 
 // Temporarily added functions here because dynamic import doesn't work properly in such scenario.
