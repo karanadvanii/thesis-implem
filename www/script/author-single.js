@@ -24,7 +24,7 @@ fetch(url, { method: "GET", headers: headers })
 
     div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper-directory">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <img src="${user.avatar.thumb.url}" class="user-image">
+                                <img src="${user.avatar.thumb.url}" class="user-image" crossorigin="anonymous">
                                 <p class="user-name">${user.firstName} ${user.lastName}</p>
                                 <img src="../images/man.png" class="icons-user"> <p class="user-position-directory"> ${user.position}</p><br>
                                 <img src="../images/place.png" class="icons-user"> <p class="user-position-directory"> ${user.location}</p><br>

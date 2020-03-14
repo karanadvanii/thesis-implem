@@ -9,7 +9,6 @@ workbox.core.setCacheNameDetails({
     runtime: 'runtime',
   });
 
-
 workbox.routing.registerRoute(
     new RegExp('\.css$'),
     workbox.strategies.staleWhileRevalidate({
@@ -42,6 +41,7 @@ workbox.routing.registerRoute(
         ]
     })
 );
+
 workbox.routing.registerRoute(
     new RegExp('\.(pdf|xls|pdf|pptx)$'),
     workbox.strategies.cacheFirst({
@@ -61,7 +61,19 @@ workbox.routing.registerRoute(
         cacheExpiration: {
             maxAgeSeconds: 60 * 60 * 24 * 30,
             purgeOnQuotaError: true,
-            maxEntries: 100
+            maxEntries: 50
+        }
+    })
+);
+
+workbox.routing.registerRoute(
+    new RegExp('https://cdn-main-de1.staffbase.rocks/t1-backend/image/upload/'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'staffbase-image-cache-cdn',
+        cacheExpiration: {
+            maxAgeSeconds: 60 * 60 * 24 * 30,
+            purgeOnQuotaError: true,
+            maxEntries: 50
         }
     })
 );
@@ -122,23 +134,14 @@ workbox.routing.registerRoute(
     workbox.strategies.networkOnly({
       plugins: [
         new workbox.backgroundSync.Plugin('requestsQueue', {
-          maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+          maxRetentionTime: 24 * 60 * 60 // Retry for max of 24 Hours
         })
       ]
     }),
     'POST'
   );
 
-
-// Use a stale-while-revalidate strategy for all other requests.
-//workbox.routing.setDefaultHandler(
-//  new workbox.strategies.StaleWhileRevalidate()
-//);
-
 workbox.precaching.precacheAndRoute([]);
-
-
-
 
 //self.addEventListener('install', function(event) {
 //  event.waitUntil(
@@ -167,3 +170,7 @@ workbox.precaching.precacheAndRoute([]);
 //  new workbox.strategies.StaleWhileRevalidate()
 //);
 
+// Use a stale-while-revalidate strategy for all other requests.
+//workbox.routing.setDefaultHandler(
+//  new workbox.strategies.StaleWhileRevalidate()
+//);
