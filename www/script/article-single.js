@@ -1,13 +1,13 @@
 function createNode(element) {
-  return document.createElement(element);
+	return document.createElement(element);
 }
 
 function append(parent, el) {
-  return parent.appendChild(el);
+	return parent.appendChild(el);
 }
 
 const API_KEY =
-  "NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=";
+	"NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=";
 const source = location.href.split('=')[1];
 const url = "https://de-t1.eyo.net/api/posts/" + source;
 const container = document.getElementById("data-entry");
@@ -15,15 +15,16 @@ const container = document.getElementById("data-entry");
 let headers = new Headers();
 headers.append("Authorization", "Basic " + API_KEY);
 
-fetch(url, { method: "GET", headers: headers })
-  .then(resp => resp.json())
-  .then(function(news) {
-//    let news = data.data;
-//    return news.map(function(news) {
-      let div = createNode("div");
-      div.className = `col-xs-12 col-sm-12 col-md-12 frame`;
+fetch(url, {
+		method: "GET",
+		headers: headers
+	})
+	.then(resp => resp.json())
+	.then(function (news) {
+		let div = createNode("div");
+		div.className = `col-xs-12 col-sm-12 col-md-12 frame`;
 
-      div.innerHTML =  `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
+		div.innerHTML = `<div class="col-xs-12 col-sm-12 col-md-12 author-wrapper">
                             <div class="col-xs-3 col-sm-1 col-md-1 author-image">
                                 <a class="author-id" href="author-single.html?id=${news.author.id}"><img src=${news.author.avatar.thumb.url} class="img-responsive author-image-thumb" crossorigin="anonymous"></a>
                             </div>
@@ -43,11 +44,8 @@ fetch(url, { method: "GET", headers: headers })
                             <img src="../images/001-heart.png">${news.likes.total}<img src="../images/002-speech-bubble.png">${news.comments.total}
                         </div>
                         <div class="clearfix"></div>`;
-      append(container, div);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
-
-// ${news.author.id}
-// <p class="content-content">${news.contents.en_US.content}</p>  
+		append(container, div);
+	})
+	.catch(function (error) {
+		console.log(error);
+	});
