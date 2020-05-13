@@ -3,7 +3,6 @@ newPostForm.addEventListener('submit', async function (e) {
     e.preventDefault();
     const [title, teaser, content, fileInput] = e.target.elements;
     const data = {
-        published: "2020-03-02T18:50:39.171Z",
         contents: {
             en_US: {
                 title: title.value,
@@ -11,15 +10,20 @@ newPostForm.addEventListener('submit', async function (e) {
                 content: content.value,
                 image: await postImage(fileInput.files[0])
             }
-        }
+        },
+        published: "2020-03-02T18:50:39.171Z"
     };
+    //const formData = new FormData();
+    //formData.append("published",data.published);
+    //formData.append("contents",data.contents);
     await postData(data);
     // history.back();
 });
 
 function postData(data) {
     const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    //myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
     myHeaders.append("Authorization", "Basic NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=");
 
     let requestOptions = {

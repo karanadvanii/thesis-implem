@@ -85,22 +85,22 @@ workbox.routing.registerRoute(
 		cacheExpiration: {
 			maxAgeSeconds: 60 * 60 * 24 * 30,
 			purgeOnQuotaError: true,
-			maxEntries: 50
+			maxEntries: 50,
 		}
 	})
 );
 
 workbox.routing.registerRoute(
 	new RegExp('https://de-t1.eyo.net/api/channels/'),
-	workbox.strategies.networkFirst({
+	workbox.strategies.staleWhileRevalidate({
 		cacheName: 'staffbase-article-cache',
 		cacheExpiration: {
-			maxAgeSeconds: 60 * 60 * 24 * 30
+			maxAgeSeconds: 60 * 60 * 24 * 30,
 		}
 	})
 );
 
-// 4. cache news directory result
+
 workbox.routing.registerRoute(
 	new RegExp('https://de-t1.eyo.net/api/users/'),
 	workbox.strategies.staleWhileRevalidate({
@@ -118,7 +118,7 @@ workbox.routing.registerRoute(/(.*)-single.html(.*)/,
 		event
 	}) => {
 		try {
-			return await workbox.strategies.staleWhileRevalidate({
+			return await workbox.strategies.networkFirst({
 				cacheName: 'inner-pages'
 			}).handle({
 				event
@@ -131,12 +131,12 @@ workbox.routing.registerRoute(/(.*)-single.html(.*)/,
 
 workbox.routing.registerRoute(
 	new RegExp('https://de-t1.eyo.net/api/posts/'),
-	workbox.strategies.staleWhileRevalidate({
+	workbox.strategies.networkFirst({
 		cacheName: 'single-post-cache',
 		plugins: [
 			new workbox.expiration.Plugin({
 				maxEntries: 50,
-				maxAgeSeconds: 5 * 60, // 5 minutes
+				maxAgeSeconds: 60 * 60 * 24 * 30 
 			}),
 			new workbox.cacheableResponse.Plugin({
 				statuses: [0, 200],
@@ -150,7 +150,7 @@ workbox.routing.registerRoute(
 	workbox.strategies.networkOnly({
 		plugins: [
 			new workbox.backgroundSync.Plugin('requestsQueue', {
-				maxRetentionTime: 24 * 60 * 60 // Retry for max of 24 Hours
+				maxRetentionTime: 60 * 60 * 24 * 30 
 			})
 		]
 	}),
