@@ -11,29 +11,28 @@ newPostForm.addEventListener('submit', async function (e) {
                 image: await postImage(fileInput.files[0])
             }
         },
-        published: "2020-03-02T18:50:39.171Z"
+        published: true
     };
-    //const formData = new FormData();
-    //formData.append("published",data.published);
-    //formData.append("contents",data.contents);
-    await postData(data);
+    const searchParams = new URLSearchParams();
+    searchParams.append("published", data.published);
+    searchParams.append("contents", JSON.stringify(data.contents));
+    await postData(searchParams);
     // history.back();
 });
 
 function postData(data) {
     const myHeaders = new Headers();
-    //myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
     myHeaders.append("Authorization", "Basic NWRkZDVkOTFlYTJkMTU3ZjYxNWIyOGYxOn59UlluXk55V0NdMn1YRE0wLF15cW1Kam8hUC1EYTR1OS1BSXtfRVZ6dG4wY3Npcnt7NlpXRElSbV1qbE1PeEo=");
 
     let requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        body: JSON.stringify(data),
+        body: data,
         redirect: 'follow'
     };
 
-    return fetch("https://de-t1.eyo.net/api/channels/5e2629736199791aeb6d740f/posts", requestOptions)
+    return fetch("https://de-t1.eyo.net/api/channels/5e2629736199791aeb6d740f/articles", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
